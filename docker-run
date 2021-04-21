@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Run bash in the latest image
+. ./docker-image
+docker run --rm -it $image bash

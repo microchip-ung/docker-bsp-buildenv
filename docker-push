@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Push the latest docker image
+. ./docker-image
+echo "Pushing $image"
+docker push $image
+

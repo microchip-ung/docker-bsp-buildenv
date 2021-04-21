@@ -1,17 +1,40 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
+# Suppress time zone questions during build
+ENV TZ=Europe/Copenhagen
 
-RUN apt-get update && apt-get install -y build-essential git ruby ruby-nokogiri gettext file wget cpio bc libncurses5-dev libncursesw5-dev genext2fs mtd-utils squashfs-tools u-boot-tools util-linux patchelf bison cmake flex gettext m4 xz-utils vim rsync python3 libssl-dev
-RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-RUN  mkdir -p /opt/mscc/ && mkdir -p /usr/local/bin
-COPY ./mscc-install-pkg /usr/local/bin/
-RUN /usr/local/bin/mscc-install-pkg -t toolchains/2020.02.3-083-toolchain mscc-toolchain-bin-2020.02.3-083
-RUN /usr/local/bin/mscc-install-pkg -t toolchains/2020.02.3-085-toolchain mscc-toolchain-bin-2020.02.3-085
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+  && echo $TZ > /etc/timezone \
+  && apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y \
+# Packages sorted alphabetically
+    bc \
+    build-essential \
+    cmake \
+    cpio \
+    file \
+    gettext-base \
+    git \
+    help2man \
+    iproute2 \
+    iputils-ping \
+    libacl1-dev \
+    libncurses5 \
+    libncurses5-dev \
+    python3 \
+    rsync \
+    ruby-full \
+    sudo \
+    texinfo \
+    wget \
+  && rm -rf /var/lib/apt/lists/* \
+# git needs a user
+  && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
+# TBD Use bundler instead?
+  && gem install nokogiri asciidoctor
 
-WORKDIR /src
-ENV FORCE_UNSAFE_CONFIGURE=1
+COPY ./mscc-install-pkg /usr/local/bin
 
-#FROM alpine:3.13
-#
-#RUN apk update && apk add --virtual build-dependencies build-base gcc wget git ruby ruby-json vim gettext bash perl rsync cpio tar findutils linux-headers
-#RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
+COPY ./make-users /tmp
+RUN /tmp/make-users
