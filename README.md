@@ -19,8 +19,6 @@ There are several helper scripts to build, pull, push and run this image.
 
 The scrip names should be self-explanatory.
 
-The name and tag used enables you to 
-
 ## TODO
 
 * Reduce the size of the image for faster download
