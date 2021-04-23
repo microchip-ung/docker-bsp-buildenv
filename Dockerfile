@@ -28,13 +28,16 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     sudo \
     texinfo \
     wget \
+# Cleanup
   && rm -rf /var/lib/apt/lists/* \
 # git needs a user
   && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
 # TBD Use bundler instead?
   && gem install nokogiri asciidoctor
 
+# buildroot-layer needs this for installing missing toolchains
 COPY ./mscc-install-pkg /usr/local/bin
 
-COPY ./make-users /tmp
-RUN /tmp/make-users
+# A common entrypoint for running things before running the user command(s)
+COPY ./entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
