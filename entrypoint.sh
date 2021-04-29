@@ -3,7 +3,9 @@
 # The docker image executes as root by default, but we want the generated files
 # to be owned by the caller of the docker image.
 #
-# The .docker.enf file adds user and uid in the environment.
+# The .docker.env file must add user and uid in the environment like this:
+# MCHP_DOCKER_PARAMS="... -e BLD_USER=$(id -un) -e BLD_UID=$(id -u) ..."
+#
 # The docker image is configured to always call this file at startup.
 #
 # Here we create a user that is equal to the caller of the docker image and also

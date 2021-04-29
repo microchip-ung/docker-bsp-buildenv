@@ -6,18 +6,26 @@ This includes running the scripts defined by buildroot-layer: `source-prepare.rb
 
 The image is based on Ubuntu 20.04 LTS.
 
-In order to use the `dr` (docker-run) script in dotconfig you must create a file called .docker.env in the root of your checkout.
+In order to use the `dr` (docker-run) script in dotconfig you must create a file called `.docker.env` in the root of your checkout.
 
 This repository contains a .docker.env file you can copy.
 
 Using the `dr` script enables you to automatically download the docker image from Microchip Artifactory:
 https://artifacts.microchip.com/ui/repos/tree/Properties/docker%2Fmicrochip%2Fung%2Fbsp%2Fbsp-buildenv
 
+The docker image executes as root by default, but we want the generated files
+to be owned by the caller of the docker image.
+
+The `.docker.env` file must add user and uid in the environment like this:
+MCHP_DOCKER_PARAMS="... -e BLD_USER=$(id -un) -e BLD_UID=$(id -u) ..."
+
+See how this is implemented in the `entrypoint.sh` file.
+
 ## Helper scripts
 
 There are several helper scripts to build, pull, push and run this image.
 
-The scrip names should be self-explanatory.
+The script names should be self-explanatory.
 
 ## TODO
 
