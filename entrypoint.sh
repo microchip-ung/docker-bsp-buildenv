@@ -36,5 +36,6 @@ adduser --no-create-home --disabled-password --home / --uid $BLD_UID --gecos "Bo
 echo "$BLD_USER ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/$BLD_USER
 chmod 0440 /etc/sudoers.d/$BLD_USER
 
-# Run command as user
-runuser -u $BLD_USER -- "$@"
+# Run command as user.
+# Create pseudo-terminal for better security on interactive sessions.
+runuser --pty "$BLD_USER" --command="$@"
