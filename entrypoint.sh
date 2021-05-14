@@ -9,10 +9,12 @@
 # The docker image is configured to always call this file at startup.
 #
 # Here we create a user that is equal to the caller of the docker image and also
-# enabled this user to run sudo without a password.
+# enables this user to run sudo without a password.
 #
-# Finally we execute the command supplied by the user as the user.
+# Finally we execute the command supplied as the given user.
 #
+
+#set -x
 
 if [[ "$#" -eq "0" ]]; then
     echo "ERROR: Missing command!" 1>&2
@@ -36,6 +38,10 @@ adduser --no-create-home --disabled-password --home / --uid $BLD_UID --gecos "Bo
 echo "$BLD_USER ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/$BLD_USER
 chmod 0440 /etc/sudoers.d/$BLD_USER
 
+# Unset IFS to make "$*" put a space between each argument.
+unset IFS
+
 # Run command as user.
 # Create pseudo-terminal for better security on interactive sessions.
-runuser --pty "$BLD_USER" --command="$@"
+# Note that "$*" is used here to put all parameter into a single string.
+runuser --pty "$BLD_USER" --command="$*"
