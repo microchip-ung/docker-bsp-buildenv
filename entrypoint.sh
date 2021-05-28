@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021 Microchip Technology Inc. and its subsidiaries.
+# SPDX-License-Identifier: MIT
+
 #
 # The docker image executes as root by default, but we want the generated files
 # to be owned by the caller of the docker image.

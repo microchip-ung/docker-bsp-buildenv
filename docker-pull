@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# Pull the latest docker image
-. ./docker-image
-docker pull $image
-
