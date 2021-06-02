@@ -46,10 +46,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Enable use of python command
   && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
 # Install python-matplotlib
-  && python -m pip install matplotlib
+  && python -m pip install matplotlib \
+# Support Microsemi version
+  && ln -s /usr/local/bin/mchp-install-pkg /usr/local/bin/mscc-install-pkg
 
 # buildroot-layer needs this for installing missing toolchains
-COPY ./mscc-install-pkg /usr/local/bin
+COPY ./mchp-install-pkg /usr/local/bin
 
 # A common entrypoint for setting up things before running the user command(s)
 COPY ./entrypoint.sh /entrypoint.sh
