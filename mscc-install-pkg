@@ -5,20 +5,24 @@
 
 require 'optparse'
 
+SERVER_INTERNAL = "herent-sw-pkg.microsemi.net"
+SERVER_AMAZON   = "mscc-ent-open-source.s3-website-eu-west-1.amazonaws.com"
+SERVER_GITHUB   = "github.com"
+
 $opt = {
-  :server  => "herent-sw-pkg.microsemi.net",
+  :server  => nil,
   :type    => "mesa",
   :install => "/opt/mscc",
 }
 
 global = OptionParser.new do |opts|
-  opts.banner = "Usage: #{$0} "
+  opts.banner = "Usage: #{$0} [options] package"
 
-  opts.on("-s", "--server <server>", "HTTP server") do |server|
+  opts.on("-s", "--server <server>", "HTTP server (Default is internal server)") do |server|
     $opt[:server] = server
   end
 
-  opts.on("-t", "--type [TYPE]", "Select package type (Default #{$opt[:type].to_s})") do |type|
+  opts.on("-t", "--type <type>", "Package type (Default is #{$opt[:type].to_s})") do |type|
     if type.to_s != ""
       $opt[:type] = type
     else
@@ -28,18 +32,55 @@ global = OptionParser.new do |opts|
 
 end.order!
 
-# Check if :server is present and bail out if not
-%x(ping -q -c 1 #{$opt[:server]} > /dev/null 2>&1)
-exit $?.exitstatus if $?.exitstatus != 0
+def reachable server
+    %x(ping -q -c 1 #{server} > /dev/null 2>&1)
+    return $?.exitstatus == 0 ? true : nil
+end
+
+def url_get type, pkg
+    url = nil
+    package = pkg
+
+    if $opt[:server]
+        path = type # type must contain a full path if a server is specified
+        url = "http://#{$opt[:server]}/#{path}/#{package}.tar.gz"
+    elsif reachable(SERVER_INTERNAL) # get from local server if reachable
+        path = "jenkins/#{type}"
+        url = "http://#{SERVER_INTERNAL}/#{path}/#{package}.tar.gz"
+    else # Get package from external server
+        case type
+        when /^toolchains/ # Amazon
+            path = "public_root/toolchain"
+            url = "http://#{SERVER_AMAZON}/#{path}/#{package}.tar.gz"
+        when /^brsdk/ # Amazon
+            path = "public_root/bsp"
+            url = "http://#{SERVER_AMAZON}/#{path}/#{package}.tar.gz"
+        when /^frr/ # Amazon
+            path = "public_root/frr"
+            url = "http://#{SERVER_AMAZON}/#{path}/#{package}.tar.gz"
+        when /^mesa/ # GitHub
+            if package.match(/^mesa-(v\d{4}.\d{2})/)
+                path = "microchip-ung/mesa/releases/download/#{$1}"
+                package = "mesa-#{$1}" # cleanup package name
+                url = "http://#{SERVER_GITHUB}/#{path}/#{package}.tar.gz"
+            else
+                puts "Malformed package name: #{package}"
+            end
+        else
+            puts "Unknown type: #{type}"
+        end
+    end
+    return url, package
+end
 
 # Get exclusive lock
 fh = File.open("#{$opt[:install]}/.mscc-install-pkg-lock", File::CREAT)
 fh.flock(File::LOCK_EX)
 
-ARGV.each do |package|
-    type = $opt[:type]
-    dir = "jenkins/#{type}"
-    url = "http://#{$opt[:server]}/#{dir}/#{package}.tar.gz"
+ARGV.each do |p|
+    url, package = url_get($opt[:type], p)
+    exit 1 if url.nil?
+
     tmp_dir = "#{$opt[:install]}/.mscc-install-pkg-tmp"
     if File.directory?("#{$opt[:install]}/#{package}")
         puts "#{package} seems to be installed already."
@@ -72,4 +113,3 @@ ARGV.each do |package|
 
     puts "Package #{package} installed"
 end
-
