@@ -11,11 +11,14 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Packages sorted alphabetically
     asciidoc \
     bc \
+    bison \
     build-essential \
     cmake \
     cpio \
     dblatex \
     file \
+    flex \
+    genext2fs \
     gettext-base \
     git \
     graphviz \
@@ -27,16 +30,26 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     libgtk2.0-0 \
     libncurses5 \
     libncurses5-dev \
+    libncursesw5-dev \
+    libssl-dev \
+    m4 \
+    mtd-utils \
+    patchelf \
     python3 \
     python3-pip \
     qt5-default \
     rsync \
     ruby-full \
+    squashfs-tools \
     sudo \
     texinfo \
     tree \
+    u-boot-tools \
+    util-linux \
+    vim \
     w3m \
     wget \
+    xz-utils \
 # Cleanup
   && rm -rf /var/lib/apt/lists/* \
 # git needs a user
