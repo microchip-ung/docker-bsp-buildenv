@@ -6,7 +6,7 @@ This includes running the scripts defined by buildroot-layer: `source-prepare.rb
 
 The image is based on Ubuntu 20.04 LTS.
 
-In order to use the `dr` script from the `docker-run` repository, a file called `.docker.env` must be present
+In order to use the `dr` script from the [docker-run](https://github.com/microchip-ung/docker-run) repository, a file called `.docker.env` must be present
 somewhere between the current directory and the root of the file system.
 
 This repository contains a .docker.env file that can be used for this purpose.
