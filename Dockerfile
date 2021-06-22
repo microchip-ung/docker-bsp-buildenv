@@ -14,6 +14,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     bison \
     build-essential \
     cmake \
+    cmake-curses-gui \
     cpio \
     dblatex \
     file \
