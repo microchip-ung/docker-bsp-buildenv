@@ -40,6 +40,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     qt5-default \
     rsync \
     ruby-full \
+    ruby-parslet \
     squashfs-tools \
     sudo \
     texinfo \
