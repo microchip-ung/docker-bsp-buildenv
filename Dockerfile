@@ -33,6 +33,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     libncurses5-dev \
     libncursesw5-dev \
     libssl-dev \
+    locales \
     m4 \
     mtd-utils \
     patchelf \
@@ -54,6 +55,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     xz-utils \
 # Cleanup
   && rm -rf /var/lib/apt/lists/* \
+# Generate en_US.UTF-8 locale
+  && locale-gen en_US.UTF-8 \
+# Update locate to en_US.UTF-8
+  && update-locale LANG=en_US.UTF-8 LANGUAGE=en \
 # git needs a user
   && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
 # TBD Use bundler instead?
@@ -64,6 +69,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && python -m pip install matplotlib \
 # Support Microsemi version
   && ln -s /usr/local/bin/mchp-install-pkg /usr/local/bin/mscc-install-pkg
+
+# Set locale
+ENV LANG='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 
 # buildroot-layer needs this for installing missing toolchains
 COPY ./mchp-install-pkg /usr/local/bin
