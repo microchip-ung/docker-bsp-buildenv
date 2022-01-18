@@ -76,6 +76,10 @@ ENV LANG='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 # buildroot-layer needs this for installing missing toolchains
 COPY ./mchp-install-pkg /usr/local/bin
 
+# Add simple grid client as this is needed to dispatch sub-jobs in the internal
+# mchp building environment
+COPY ./SimpleGridClient /usr/local/bin
+
 # A common entrypoint for setting up things before running the user command(s)
 COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
