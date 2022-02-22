@@ -29,6 +29,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     libacl1-dev \
     libglade2-0 \
     libgtk2.0-0 \
+    libmpc-dev \
     libncurses5 \
     libncurses5-dev \
     libncursesw5-dev \
