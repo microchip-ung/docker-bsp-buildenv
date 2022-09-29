@@ -19,10 +19,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     dblatex \
     file \
     flex \
+    gdisk \
     genext2fs \
     gettext-base \
     git \
     graphviz \
+    gzip \
     help2man \
     iproute2 \
     iputils-ping \
@@ -37,6 +39,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     locales \
     m4 \
     mtd-utils \
+    parted \
     patchelf \
     python3 \
     python3-pip \
@@ -49,6 +52,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     texinfo \
     tree \
     u-boot-tools \
+    udev \
     util-linux \
     vim \
     w3m \
