@@ -29,6 +29,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     iproute2 \
     iputils-ping \
     libacl1-dev \
+    libelf-dev \
     libglade2-0 \
     libgtk2.0-0 \
     libmpc-dev \
