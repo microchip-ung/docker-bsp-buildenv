@@ -18,6 +18,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     cmake-curses-gui \
     cpio \
     dblatex \
+    default-jre \
+    doxygen \
     file \
     flex \
     gdisk \
@@ -69,7 +71,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # git needs a user
   && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
 # TBD Use bundler instead?
-  && gem install nokogiri asciidoctor slop \
+  && gem install nokogiri asciidoctor slop minitar optimist \
 # Enable use of python command
   && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
 # Install python-matplotlib
@@ -86,6 +88,9 @@ COPY ./mchp-install-pkg /usr/local/bin
 # Add simple grid client as this is needed to dispatch sub-jobs in the internal
 # mchp building environment
 COPY ./SimpleGridClient /usr/local/bin
+
+RUN git clone https://github.com/matthiasmiller/javascriptlint.git /tmp/jsl
+RUN cd /tmp/jsl; git checkout 5a245b453d68228878d6c283e12ef35327c45279; cd ./src; make -f Makefile.ref; cp ./Linux_All_DBG.OBJ/jsl /usr/local/bin/
 
 # A common entrypoint for setting up things before running the user command(s)
 COPY ./entrypoint.sh /entrypoint.sh
