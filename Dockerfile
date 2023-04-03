@@ -13,6 +13,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     bc \
     bison \
     build-essential \
+    ccache \
     cmake \
     cmake-curses-gui \
     cpio \
