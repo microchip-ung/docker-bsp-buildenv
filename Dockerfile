@@ -41,6 +41,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     libncurses5-dev \
     libncursesw5-dev \
     libssl-dev \
+    libtool \
     locales \
     m4 \
     mtd-utils \
