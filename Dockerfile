@@ -10,6 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && apt-get install -y \
 # Packages sorted alphabetically
     asciidoc \
+    astyle \
     autoconf \
     bc \
     bison \
