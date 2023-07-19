@@ -50,7 +50,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     patchelf \
     python3 \
     python3-pip \
-    qt5-default \
     rsync \
     ruby-full \
     ruby-parslet \
