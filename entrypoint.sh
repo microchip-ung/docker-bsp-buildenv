@@ -36,7 +36,14 @@ if [[ -z $BLD_UID ]]; then
 fi
 
 # Add user as specified in environment
-adduser --no-create-home --disabled-password --home / --uid $BLD_UID --gecos "Bob the Builder" $BLD_USER > /dev/null
+adduser --no-create-home --disabled-password --home /nvm --uid $BLD_UID --gecos "Bob the Builder" $BLD_USER > /dev/null
+
+# Provide cache when running antora
+chmod -R 0775 /nvm/.npm /nvm/.cache
+chown -R $BLD_USER /nvm/.npm  /nvm/.cache
+#
+# Provide an absolute path for the BSP documentation
+ln -sf $PWD /bsp
 
 # Allow user to sudo without password
 echo "$BLD_USER ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/$BLD_USER
