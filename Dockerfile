@@ -75,7 +75,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # git needs a user
   && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
 # TBD Use bundler instead?
-  && gem install nokogiri asciidoctor slop minitar optimist \
+  && gem install nokogiri -v 1.15.4 \
+  && gem install asciidoctor slop minitar optimist \
 # Enable use of python command
   && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
 # Install python-matplotlib
