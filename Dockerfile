@@ -19,6 +19,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     cmake \
     cmake-curses-gui \
     cpio \
+    cryptsetup-bin \
     curl \
     dblatex \
     default-jre \
