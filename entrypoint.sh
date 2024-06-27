@@ -49,6 +49,8 @@ ln -sf $PWD /bsp
 echo "$BLD_USER ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/$BLD_USER
 chmod 0440 /etc/sudoers.d/$BLD_USER
 
+echo "127.0.0.1 $(hostname)" >> /etc/hosts
+
 # Unset IFS to make "$*" put a space between each argument.
 unset IFS
 

@@ -39,10 +39,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     libelf-dev \
     libglade2-0 \
     libgtk2.0-0 \
+    libjson-c-dev \
     libmpc-dev \
     libncurses5 \
     libncurses5-dev \
     libncursesw5-dev \
+    libpcap-dev \
     libssl-dev \
     libtool \
     locales \
@@ -54,6 +56,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     python3-pip \
     rsync \
     ruby-full \
+    ruby-jira \
     ruby-parslet \
     squashfs-tools \
     sudo \
@@ -66,6 +69,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     w3m \
     wget \
     xz-utils \
+    zlib1g-dev \
+    zlibc \
 # Cleanup
   && rm -rf /var/lib/apt/lists/* \
 # Generate en_US.UTF-8 locale
