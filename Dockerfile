@@ -82,6 +82,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # TBD Use bundler instead?
   && gem install nokogiri -v 1.15.4 \
   && gem install asciidoctor slop minitar optimist \
+  && gem install json_schemer \
 # Enable use of python command
   && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
 # Install python-matplotlib
