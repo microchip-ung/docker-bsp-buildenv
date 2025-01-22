@@ -81,7 +81,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && git config --system user.email "br@example.com" && git config --system user.name "Build Root" \
 # TBD Use bundler instead?
   && gem install nokogiri -v 1.15.4 \
-  && gem install asciidoctor slop minitar optimist \
+  && gem install minitar -v 0.12.1 \
+  && gem install asciidoctor slop optimist \
   && gem install json_schemer \
 # Enable use of python command
   && update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
