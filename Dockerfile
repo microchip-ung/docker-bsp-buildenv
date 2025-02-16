@@ -127,3 +127,6 @@ COPY ./alias.sh /nvm/.bashrc
 # A common entrypoint for setting up things before running the user command(s)
 COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
+
+RUN mkdir -p /opt/mscc && wget -O- http://mscc-ent-open-source.s3-eu-west-1.amazonaws.com/public_root/bsp/mscc-brsdk-arm64-2024.06.tar.gz | tar -xz -C /opt/mscc/
+RUN mkdir -p /opt/mscc && wget -O- http://mscc-ent-open-source.s3-eu-west-1.amazonaws.com/public_root/toolchain/mscc-toolchain-bin-2024.02-105.tar.gz | tar -xz -C /opt/mscc/
