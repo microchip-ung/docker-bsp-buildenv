@@ -64,6 +64,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     tree \
     u-boot-tools \
     udev \
+    unifdef \
     util-linux \
     vim \
     w3m \
